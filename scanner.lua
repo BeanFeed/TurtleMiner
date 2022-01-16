@@ -26,7 +26,7 @@ function toBlock(dis)
     end
 
     while dis.y ~= 0 do
-        if dis.y < 0 then
+        if dis.y > 0 then
             turtle.digDown()
             turtle.down()
         else
@@ -160,6 +160,7 @@ function turnRight()
 end
 ]]
 getDir()
+geo = peripheral.wrap("left")
 while true do
 sleep(2)
 targ = nil
