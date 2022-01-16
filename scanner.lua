@@ -145,9 +145,9 @@ function turnLeft()
         dir = "north"
     end
 end    
-
+--[[
 function turnRight()
-    turtle.turnLeft()
+    turtle.turnRight()
     if dir == "north" then
         dir = "east"
     elseif dir == "east" then
@@ -158,6 +158,7 @@ function turnRight()
         dir = "north"
     end
 end
+]]
 getDir()
 while true do
 sleep(2)
