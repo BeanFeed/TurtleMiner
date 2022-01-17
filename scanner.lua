@@ -161,30 +161,41 @@ end
 ]]
 getDir()
 geo = peripheral.wrap("left")
-while true do
-sleep(2)
-targ = nil
-blocks = geo.scan(8)
 
-for key,value in pairs(blocks) do
- if value.name == "minecraft:diamond_ore" then
-  if targ ~= nil then
-   if (math.abs(blocks[targ].x) + math.abs(blocks[targ].z)) > (math.abs(blocks[key].x) + math.abs(blocks[key].z)) then
-    targ = key
-   end
-  else
-   targ = key
-  end
- end
-end
-if blocks[targ] ~= nil then
-print(textutils.serialise(blocks[targ].y))
-local getBlock = {}
-getBlock.x = blocks[targ].x
-getBlock.y = blocks[targ].y
-getBlock.z = blocks[targ].z
-toBlock(getBlock)
-else
-print("No Diamonds Found")
-end
+
+
+while true do
+    sleep(2)
+    targ = nil
+    blocks = geo.scan(8)
+
+    for key,value in pairs(blocks) do
+        if value.name == "minecraft:diamond_ore" then
+            if targ ~= nil then
+                if (math.abs(blocks[targ].x) + math.abs(blocks[targ].z)) > (math.abs(blocks[key].x) + math.abs(blocks[key].z)) then
+                    targ = key
+                end
+            else
+                targ = key
+            end
+        end
+    end
+    if blocks[targ] ~= nil then
+        
+        local getBlock = {}
+        getBlock.x = blocks[targ].x
+        getBlock.y = blocks[targ].y
+        getBlock.z = blocks[targ].z
+        toBlock(getBlock)
+    else
+        turtle.select(picLoc)
+        turtle.equipLeft()
+        print("No Diamonds Found")
+        for i = 1, 16 do
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.equipLeft()
+        geo = peripheral.wrap("left")
+    end
 end
