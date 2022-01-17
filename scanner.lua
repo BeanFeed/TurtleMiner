@@ -25,8 +25,8 @@ function toBlock(dis)
         end
     end
 
-    while dis.y ~= 0 do
-        if dis.y > 0 then
+    for i = 1, math.abs(dis.y) do
+        if dis.y < 0 then
             turtle.digDown()
             turtle.down()
         else
