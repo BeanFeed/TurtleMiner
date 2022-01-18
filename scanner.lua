@@ -6,6 +6,18 @@ local scannerLoc
 local picLoc
 local chunkLoc
 
+local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore'}
+
+function inTable (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 function toBlock(dis)
     turtle.select(picLoc)
     turtle.equipLeft()
@@ -170,7 +182,7 @@ while true do
     blocks = geo.scan(8)
 
     for key,value in pairs(blocks) do
-        if value.name == "minecraft:diamond_ore" then
+        if inTable(wanted,value.name) then
             if targ ~= nil then
                 if (math.abs(blocks[targ].x) + math.abs(blocks[targ].z)) > (math.abs(blocks[key].x) + math.abs(blocks[key].z)) then
                     targ = key
