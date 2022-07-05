@@ -6,8 +6,54 @@ local scannerLoc
 local picLoc
 local chunkLoc
 local chatLoc
-local periphs = {'chat_box','geo_scanner','modem','diamond_pickaxe','chunk_controller'}
+local ditch = {'minecraft:dirt','minecraft:cobblestone'}
 local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore'}
+function dumpItems()
+    for i = 1, 16 do
+        if(turtle.getItemDetail(i) ~= nil and inTable(ditch, turtle.getItemDetail(i).name) == true) then
+            turtle.select(i)
+            turtle.drop()
+        end
+    end
+end
+function equipItem(itemName)
+    local didDrop = false
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) == nil then
+            turtle.select(i)
+            turtle.equipLeft()
+            didDrop = true
+        end
+    end
+    print(didDrop)
+    if didDrop == false then
+        dumpItems()
+    end
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) == nil then
+            turtle.select(i)
+            turtle.equipLeft()
+            didDrop = true
+        end
+    end
+    if didDrop == false then
+        getPLocs()
+        turtle.select(modemLoc)
+        turtle.equipLeft()
+        x,y,z = gps.locate()
+        turtle.select(chatLoc)
+        turtle.equipLeft()
+        chatty = peripheral.wrap("left")
+        chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "BeanFeed")
+        exit()
+    end
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil and string.match(turtle.getItemDetail(i).name, itemName) == itemName then
+            turtle.select(i)
+            turtle.equipLeft()
+        end
+    end
+end
 
 function inTable (tab, val)
     for index, value in ipairs(tab) do
@@ -17,6 +63,63 @@ function inTable (tab, val)
     end
 
     return false
+end
+function getPLocs()
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) == nil then
+            turtle.select(i)
+            turtle.equipLeft()
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) == nil then
+            turtle.select(i)
+            turtle.equipRight()
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "modem") ~= nil then
+                modemLoc = i
+            end
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "geo_scanner") ~= nil then
+                scannerLoc = i
+            end
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "diamond_pickaxe") ~= nil then
+                picLoc = i
+            end
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "chunk_controller") ~= nil then
+                chunkLoc = i
+            end
+        end
+    end
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "advancedperipherals:chat_box") ~= nil then
+                chatLoc = i
+            end
+        end
+    end
+    turtle.select(chunkLoc)
+    turtle.equipRight()
 end
 
 function toBlock(dis)
@@ -63,20 +166,20 @@ function toBlock(dis)
             turtle.forward()
         end
     end
+    
     turtle.equipLeft()
     os.sleep(0.5)
-    turtle.select(modemLoc)
-    turtle.equipLeft()
+    equipItem("modem")
     rednet.open("left")
     x,y,z = gps.locate()
-    turtle.equipLeft()
     os.sleep(0.5)
-    turtle.select(chatLoc)
-    turtle.equipLeft()
+    equipItem("chat_box")
     chatty = peripheral.wrap("left")
     chatty.sendMessageToPlayer("Position: "..x.." "..y.." "..z, "BeanFeed")
-    turtle.equipLeft()
+    os.sleep(0.5)
+    equipItem("geo_scanner")
     geo = peripheral.wrap("left")
+    dumpItems()
 end
 
 function getDir()
