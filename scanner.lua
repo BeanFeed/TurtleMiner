@@ -5,7 +5,8 @@ local modemLoc
 local scannerLoc
 local picLoc
 local chunkLoc
-
+local chatLoc
+local periphs = {'chat_box','geo_scanner','modem','diamond_pickaxe','chunk_controller'}
 local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore'}
 
 function inTable (tab, val)
@@ -63,6 +64,11 @@ function toBlock(dis)
         end
     end
     turtle.equipLeft()
+    turtle.select(modemLoc)
+    turtle.equipLeft()
+    x,y,z = gps.location()
+    chatty.sendMessageToPlayer("Position: "..x .." "..y.." "..z)
+    turtle.equipLeft()
     geo = peripheral.wrap("left")
 end
 
@@ -113,10 +119,19 @@ function getDir()
         end
     end
 
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "chat_box") ~= nil then
+                chatLoc = i
+            end
+        end
+    end
+
     print(modemLoc)
     print(scannerLoc)
     print(picLoc)
     print(chunkLoc)
+    print(chatLoc)
     turtle.select(chunkLoc)
     turtle.equipRight()
     turtle.select(modemLoc)
