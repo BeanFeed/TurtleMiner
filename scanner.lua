@@ -67,7 +67,7 @@ function toBlock(dis)
     turtle.select(modemLoc)
     turtle.equipLeft()
     x,y,z = gps.location()
-    chatty.sendMessageToPlayer("Position: "..x .." "..y.." "..z)
+    chatty.sendMessageToPlayer("Position: "..x .." "..y.." "..z, "BeanFeed")
     turtle.equipLeft()
     geo = peripheral.wrap("left")
 end
