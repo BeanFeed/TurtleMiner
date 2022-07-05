@@ -6,6 +6,7 @@ local scannerLoc
 local picLoc
 local chunkLoc
 local chatLoc
+local run = true
 local ditch = {'minecraft:dirt','minecraft:cobblestone'}
 local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore'}
 function dumpItems()
@@ -299,13 +300,25 @@ end
 getDir()
 geo = peripheral.wrap("left")
 
+function phoneHome()
+    equipItem("modem")
+    rednet.open("left")
+    x,y,z = gps.locate()
+    equipItem("chat_box")
+    chatty = peripheral.wrap("left")
+    chatty.sendMessageToPlayer("Out Of Fuel At: "..x.." "..y.." "..z,"BeanFeed")
+    run = false
+    exit()
+end
 
-
-while true do
+while run do
     sleep(2)
     targ = nil
     blocks = geo.scan(8)
-
+    if(turtle.getFuelLevel < 1))then
+        phoneHome()
+        print("phone home")
+    end
     for key,value in pairs(blocks) do
         if inTable(wanted,value.name) then
             if targ ~= nil then
