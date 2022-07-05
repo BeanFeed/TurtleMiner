@@ -315,7 +315,7 @@ while run do
     sleep(2)
     targ = nil
     blocks = geo.scan(8)
-    if(turtle.getFuelLevel < 1))then
+    if(turtle.getFuelLevel() < 1)then
         phoneHome()
         print("phone home")
     end
