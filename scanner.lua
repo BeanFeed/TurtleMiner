@@ -125,7 +125,7 @@ function getDir()
 
     for i = 1, 16 do
         if turtle.getItemDetail(i) ~= nil then
-            if string.match(turtle.getItemDetail(i).name, "chat_box") ~= nil then
+            if string.match(turtle.getItemDetail(i).name, "advancedperipherals:chat_box") ~= nil then
                 chatLoc = i
             end
         end
