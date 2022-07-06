@@ -57,6 +57,7 @@ function equipItem(itemName)
         os.sleep(0.5)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "Kingofmemes1020")
         updateDiscord()
+        print("error 2")
         exit()
     end
     for i = 1, 16 do
@@ -192,6 +193,7 @@ function toBlock(dis)
     chatty.sendMessageToPlayer("Position: "..x.." "..y.." "..z, "Kingofmemes1020")
     os.sleep(0.5)
     updateDiscord()
+    print("error 1")
     equipItem("geo_scanner")
     geo = peripheral.wrap("left")
     dumpItems()
@@ -374,6 +376,7 @@ while run do
         getBlock.y = blocks[targ].y
         getBlock.z = blocks[targ].z
         dumpItems()
+        equipItem("minecraft:diamond_pickaxe")
         toBlock(getBlock)
     else
         updateDiscord()
