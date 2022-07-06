@@ -37,17 +37,7 @@ function equipItem(itemName)
             didDrop = true
         end
     end
-function tryRefuel()
-    for i = 1, 16 do
-        if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore')) then
-            turtle.select(i)
-            turtle.refuel()
-            print("Refuel Success")
-        end
-    end
-    phoneHome()
-    print("Phone Home")
-end
+
     if didDrop == false then
         getPLocs()
         turtle.select(modemLoc)
@@ -314,6 +304,18 @@ end
 ]]
 getDir()
 geo = peripheral.wrap("left")
+
+function tryRefuel()
+    for i = 1, 16 do
+        if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore')) then
+            turtle.select(i)
+            turtle.refuel()
+            print("Refuel Success")
+        end
+    end
+    phoneHome()
+    print("Phone Home")
+end
 
 function phoneHome()
     equipItem("modem")
