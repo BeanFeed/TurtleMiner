@@ -2,6 +2,7 @@ local DiscordHook = require("DiscordHook")
 local success, hook = DiscordHook.createWebhook("https://discord.com/api/webhooks/994224723133206549/pP15Ld71gDyWEWT0-uRcxshiKFI9vgY6f9vb9fTWTeRIwTXXwH0Fgny_9L1x1QdtXGa5")
 if not success then
     error("Webhook connection failed! Reason: " .. hook)
+    exit()
 end
 
 
@@ -335,8 +336,9 @@ function updateDiscord(args)
     equipItem("modem")
     rednet.open("left")
     x,y,z = gps.locate()
+    print(x..y..z)
     turtle.equipLeft()
-    if args ~= nil then
+    if args == nil then
         hook.send("Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
     else
         if args == "Full" then
