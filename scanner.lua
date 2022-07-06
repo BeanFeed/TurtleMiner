@@ -42,10 +42,11 @@ function tryRefuel()
         if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore')) then
             turtle.select(i)
             turtle.refuel()
-            return true
+            print("Refuel Success")
         end
     end
-    return false
+    phoneHome()
+    print("Phone Home")
 end
     if didDrop == false then
         getPLocs()
@@ -331,9 +332,9 @@ while run do
     sleep(2)
     targ = nil
     blocks = geo.scan(8)
-    if(turtle.getFuelLevel() < 1 and tryRefuel() == false)then
-        phoneHome()
-        print("phone home")
+    if(turtle.getFuelLevel() < 1)then
+        tryRefuel()
+        print("Try Refuel")
     end
     for key,value in pairs(blocks) do
         if inTable(wanted,value.name) then
