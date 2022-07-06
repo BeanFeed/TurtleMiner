@@ -7,11 +7,11 @@ local picLoc
 local chunkLoc
 local chatLoc
 local run = true
-local ditch = {'minecraft:dirt','minecraft:cobblestone'}
+local keep = {'minecraft:diamond','minecraft:redstone','minecraft:raw_iron','minecraft:raw_gold','minecraft:lapis_lazuli'}
 local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore','minecraft:coal_ore','minecraft:deepslate_coal_ore'}
 function dumpItems()
     for i = 1, 16 do
-        if(turtle.getItemDetail(i) ~= nil and inTable(ditch, turtle.getItemDetail(i).name) == true) then
+        if(turtle.getItemDetail(i) ~= nil and inTable(keep, turtle.getItemDetail(i).name) == false) then
             turtle.select(i)
             turtle.drop()
         end
