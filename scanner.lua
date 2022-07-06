@@ -8,7 +8,7 @@ local chunkLoc
 local chatLoc
 local run = true
 local ditch = {'minecraft:dirt','minecraft:cobblestone'}
-local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore'}
+local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore','minecraft:coal_ore','minecraft:deepslate_coal_ore'}
 function dumpItems()
     for i = 1, 16 do
         if(turtle.getItemDetail(i) ~= nil and inTable(ditch, turtle.getItemDetail(i).name) == true) then
@@ -37,6 +37,16 @@ function equipItem(itemName)
             didDrop = true
         end
     end
+function tryRefuel()
+    for i = 1, 16 do
+        if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore') then
+            turtle.select(i)
+            turtle.refuel()
+            return true
+        end
+    end
+    return false
+end
     if didDrop == false then
         getPLocs()
         turtle.select(modemLoc)
@@ -315,7 +325,7 @@ while run do
     sleep(2)
     targ = nil
     blocks = geo.scan(8)
-    if(turtle.getFuelLevel() < 1)then
+    if(turtle.getFuelLevel() < 1 and tryRefuel() == false)then
         phoneHome()
         print("phone home")
     end
