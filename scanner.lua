@@ -36,7 +36,7 @@ function dumpItems()
 end
 function moveDiamonds(loc)
     for i = 1, 16 do
-        if turtle.getItemDetail(i).name == "minecraft:diamond" and i ~= loc then
+        if turtle.getItemDetail(i) ~= nil and turtle.getItemDetail(i).name == "minecraft:diamond" and i ~= loc then
             turtle.select(i)
             turtle.transferTo(loc)
         end
