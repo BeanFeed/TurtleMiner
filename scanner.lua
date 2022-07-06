@@ -7,7 +7,7 @@ local picLoc
 local chunkLoc
 local chatLoc
 local run = true
-local keep = {'minecraft:diamond_pickaxe','advancedperipherals:chat_box','advancedperipherals:geo_scanner','computercraft:wireless_modem_advanced','advancedperipherals:chunk_controller','','minecraft:diamond','minecraft:redstone','minecraft:raw_iron','minecraft:raw_gold','minecraft:lapis_lazuli'}
+local keep = {'minecraft:diamond_pickaxe','advancedperipherals:chat_box','advancedperipherals:geo_scanner','computercraft:wireless_modem_advanced','advancedperipherals:chunk_controller','minecraft:coal','minecraft:diamond','minecraft:redstone','minecraft:raw_iron','minecraft:raw_gold','minecraft:lapis_lazuli'}
 local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore','minecraft:coal_ore','minecraft:deepslate_coal_ore'}
 function dumpItems()
     for i = 1, 16 do
