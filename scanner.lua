@@ -56,6 +56,7 @@ function equipItem(itemName)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "BeanFeed")
         os.sleep(0.5)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "Kingofmemes1020")
+        updateDiscord()
         exit()
     end
     for i = 1, 16 do
@@ -190,6 +191,7 @@ function toBlock(dis)
     os.sleep(0.5)
     chatty.sendMessageToPlayer("Position: "..x.." "..y.." "..z, "Kingofmemes1020")
     os.sleep(0.5)
+    updateDiscord()
     equipItem("geo_scanner")
     geo = peripheral.wrap("left")
     dumpItems()
@@ -341,6 +343,7 @@ function phoneHome()
     chatty.sendMessageToPlayer("Out Of Fuel At: "..x.." "..y.." "..z,"BeanFeed")
     os.sleep(0.5)
     chatty.sendMessageToPlayer("Out Of Fuel At: "..x.." "..y.." "..z,"Kingofmemes1020")
+    updateDiscord()
     run = false
     exit()
 end
@@ -373,15 +376,14 @@ while run do
         dumpItems()
         toBlock(getBlock)
     else
-        turtle.select(picLoc)
-        turtle.equipLeft()
-        print("No Diamonds Found")
         updateDiscord()
+        equipItem("minecraft:diamond_pickaxe")
+        print("No Diamonds Found")
         for i = 1, 16 do
             turtle.dig()
             turtle.forward()
         end
-        turtle.equipLeft()
+        equipItem("scanner")
         geo = peripheral.wrap("left")
     end
 end
