@@ -56,7 +56,7 @@ function equipItem(itemName)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "BeanFeed")
         os.sleep(0.5)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "Kingofmemes1020")
-        updateDiscord()
+        updateDiscord("Full")
         print("error 2")
         exit()
     end
@@ -136,8 +136,7 @@ function getPLocs()
 end
 
 function toBlock(dis)
-    turtle.select(picLoc)
-    turtle.equipLeft()
+    equipItem("minecraft:diamond_pickaxe")
     if dis.x ~= 0 then
         if dis.x < 0 then
             while dir ~= "west" do
@@ -179,8 +178,6 @@ function toBlock(dis)
             turtle.forward()
         end
     end
-    
-    turtle.equipLeft()
     os.sleep(0.5)
     equipItem("modem")
     rednet.open("left")
@@ -316,12 +313,16 @@ end
 getDir()
 geo = peripheral.wrap("left")
 
-function updateDiscord()
+function updateDiscord(args)
     equipItem("modem")
     rednet.open("left")
     x,y,z = gps.locate()
     turtle.equipLeft()
-    hook.send("Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+    if args ~= nil then
+        hook.send("Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+    else if args == "Full"
+        hook.send("@BeanFeed @Jerrry Full!! Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+    end
 end
 
 function tryRefuel()
