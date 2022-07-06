@@ -1,3 +1,10 @@
+local DiscordHook = require("DiscordHook")
+local success, hook = DiscordHook.createWebhook("https://discord.com/api/webhooks/994224723133206549/pP15Ld71gDyWEWT0-uRcxshiKFI9vgY6f9vb9fTWTeRIwTXXwH0Fgny_9L1x1QdtXGa5")
+if not success then
+    error("Webhook connection failed! Reason: " .. hook)
+end
+
+
 geo = peripheral.wrap("left")
 
 local dir
@@ -8,7 +15,7 @@ local chunkLoc
 local chatLoc
 local run = true
 local keep = {'minecraft:diamond_pickaxe','advancedperipherals:chat_box','advancedperipherals:geo_scanner','computercraft:wireless_modem_advanced','advancedperipherals:chunk_controller','minecraft:coal','minecraft:diamond','minecraft:redstone','minecraft:raw_iron','minecraft:raw_gold','minecraft:lapis_lazuli'}
-local wanted = {'minecraft:diamond_ore','minecraft:redstone_ore','minecraft:deepslate_diamond_ore','minecraft:coal_ore','minecraft:deepslate_coal_ore'}
+local wanted = {'minecraft:diamond_ore','minecraft:deepslate_diamond_ore'}
 function dumpItems()
     for i = 1, 16 do
         if(turtle.getItemDetail(i) ~= nil and inTable(keep, turtle.getItemDetail(i).name) == false) then
@@ -305,6 +312,14 @@ end
 getDir()
 geo = peripheral.wrap("left")
 
+function updateDiscord()
+    equipItem("modem")
+    rednet.open("left")
+    x,y,z = gps.locate()
+    turtle.equipLeft()
+    hook.send("Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+end
+
 function tryRefuel()
     for i = 1, 16 do
         if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore')) then
@@ -355,11 +370,13 @@ while run do
         getBlock.x = blocks[targ].x
         getBlock.y = blocks[targ].y
         getBlock.z = blocks[targ].z
+        dumpItems()
         toBlock(getBlock)
     else
         turtle.select(picLoc)
         turtle.equipLeft()
         print("No Diamonds Found")
+        updateDiscord()
         for i = 1, 16 do
             turtle.dig()
             turtle.forward()
