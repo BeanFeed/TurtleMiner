@@ -6,7 +6,7 @@ end
 
 
 geo = peripheral.wrap("left")
-
+local haLoc
 local dir
 local modemLoc
 local scannerLoc
@@ -17,10 +17,25 @@ local run = true
 local keep = {'minecraft:diamond_pickaxe','advancedperipherals:chat_box','advancedperipherals:geo_scanner','computercraft:wireless_modem_advanced','advancedperipherals:chunk_controller','minecraft:coal','minecraft:diamond','minecraft:redstone','minecraft:raw_iron','minecraft:raw_gold','minecraft:lapis_lazuli'}
 local wanted = {'minecraft:diamond_ore','minecraft:deepslate_diamond_ore'}
 function dumpItems()
+    local highestAmount = 0
     for i = 1, 16 do
         if(turtle.getItemDetail(i) ~= nil and inTable(keep, turtle.getItemDetail(i).name) == false) then
             turtle.select(i)
             turtle.drop()
+        end
+    end
+    for i = 1, 16 do
+        if turtle.getItemDetail(i).name == "minecraft:diamond" and turtle.getItemCount(i) ~= 64 and turtle.getItemCount(i) > haLoc then
+            haLoc = i
+        end
+    end
+    moveDiamonds(haLoc)
+end
+function moveDiamonds(loc)
+    for i = 1, 16 do
+        if turtle.getItemDetail(i).name == "minecraft:diamond" and i ~= loc then
+            turtle.select(i)
+            turtle.transferTo(loc)
         end
     end
 end
@@ -50,13 +65,13 @@ function equipItem(itemName)
         turtle.select(modemLoc)
         turtle.equipLeft()
         x,y,z = gps.locate()
+        updateDiscord("Full")
         turtle.select(chatLoc)
         turtle.equipLeft()
         chatty = peripheral.wrap("left")
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "BeanFeed")
         os.sleep(0.5)
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "Kingofmemes1020")
-        updateDiscord("Full")
         print("error 2")
         exit()
     end
@@ -320,8 +335,11 @@ function updateDiscord(args)
     turtle.equipLeft()
     if args ~= nil then
         hook.send("Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
-    else if args == "Full"
-        hook.send("@BeanFeed @Jerrry Full!! Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+    else
+        if args == "Full" then
+            hook.send("@BeanFeed @Jerrry Full!! Postion [X: "..x..", Y: "..y..", Z: "..z.."], Fuel Level: "..turtle.getFuelLevel())
+    
+        end
     end
 end
 
