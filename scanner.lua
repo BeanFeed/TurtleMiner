@@ -56,6 +56,7 @@ end
         turtle.equipLeft()
         chatty = peripheral.wrap("left")
         chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "BeanFeed")
+        chatty.sendMessageToPlayer("Full: "..x.." "..y.." "..z, "Kingofmemes1020")
         exit()
     end
     for i = 1, 16 do
@@ -187,6 +188,7 @@ function toBlock(dis)
     equipItem("chat_box")
     chatty = peripheral.wrap("left")
     chatty.sendMessageToPlayer("Position: "..x.." "..y.." "..z, "BeanFeed")
+    chatty.sendMessageToPlayer("Position: "..x.." "..y.." "..z, "Kingofmemes1020")
     os.sleep(0.5)
     equipItem("geo_scanner")
     geo = peripheral.wrap("left")
@@ -317,6 +319,7 @@ function phoneHome()
     equipItem("chat_box")
     chatty = peripheral.wrap("left")
     chatty.sendMessageToPlayer("Out Of Fuel At: "..x.." "..y.." "..z,"BeanFeed")
+    chatty.sendMessageToPlayer("Out Of Fuel At: "..x.." "..y.." "..z,"Kingofmemes1020")
     run = false
     exit()
 end
