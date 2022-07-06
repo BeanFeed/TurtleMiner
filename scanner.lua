@@ -24,12 +24,15 @@ function dumpItems()
             turtle.drop()
         end
     end
+    haLoc = 0
     for i = 1, 16 do
-        if turtle.getItemDetail(i).name == "minecraft:diamond" and turtle.getItemCount(i) ~= 64 and turtle.getItemCount(i) > haLoc then
+        if turtle.getItemDetail(i) ~= nil and turtle.getItemDetail(i).name == "minecraft:diamond" and turtle.getItemCount(i) ~= 64 and turtle.getItemCount(i) > haLoc then
             haLoc = i
         end
     end
-    moveDiamonds(haLoc)
+    if haLoc ~= 0 then
+        moveDiamonds(haLoc)
+    end
 end
 function moveDiamonds(loc)
     for i = 1, 16 do
