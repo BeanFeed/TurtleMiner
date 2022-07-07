@@ -86,7 +86,12 @@ function equipItem(itemName)
         end
     end
 end
-
+function goUp()
+    for i = 1, 30 do
+        turtle.digUp()
+        turtle.up()
+    end
+end
 function inTable (tab, val)
     for index, value in ipairs(tab) do
         if value == val then
@@ -409,8 +414,14 @@ while run do
         for i = 1, 16 do
             turtle.dig()
             turtle.forward()
-        end
-        equipItem("scanner")
-        geo = peripheral.wrap("left")
+    end
+    equipItem("modem")
+    rednet.open("left")
+    x,y,z = gps.locate()
+    if y <= -50 then
+        goUp()
+    end
+    equipItem("scanner")
+    geo = peripheral.wrap("left")
     end
 end
