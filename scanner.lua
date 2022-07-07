@@ -350,7 +350,7 @@ end
 
 function tryRefuel()
     for i = 1, 16 do
-        if(turtle.getItemDetail(i) ~= nil and (turtle.getItemDetail(i).name == 'minecraft:coal_ore' or turtle.getItemDetail(i).name == 'minecraft:deepslate_coal_ore')) then
+        if(turtle.getItemDetail(i) ~= nil and turtle.getItemDetail(i).name == 'minecraft:coal') then
             turtle.select(i)
             turtle.refuel()
             print("Refuel Success")
