@@ -1,5 +1,5 @@
 local DiscordHook = require("DiscordHook")
-local success, hook = DiscordHook.createWebhook("https://discord.com/api/webhooks/994224723133206549/pP15Ld71gDyWEWT0-uRcxshiKFI9vgY6f9vb9fTWTeRIwTXXwH0Fgny_9L1x1QdtXGa5")
+local success, hook = DiscordHook.createWebhook("hidden")
 if not success then
     error("Webhook connection failed! Reason: " .. hook)
     exit()
